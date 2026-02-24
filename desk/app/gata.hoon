@@ -1,4 +1,4 @@
-/-  chat, *gata
+/-   *gata
 /+  default-agent, dbug
 |%
 +$  versioned-state
@@ -8,7 +8,7 @@
 +$  card  card:agent:gall
 ++  chat-subscribe-card
   |=  =ship
-  [%pass /chat/updates %agent [ship %chat] %watch /ui]
+  [%pass /chat/updates %agent [ship %channels] %watch /v3/chat/(scot %p ship)/tm-wayfinding-group-chat]
 ++  run-thread-card
   |=  [call=cord =command =flag:chat text=cord =memo:chat]
   ^-  card
@@ -20,23 +20,28 @@
 ++  message-card
   |=  [our=ship =action:chat]
   ^-  card
-  [%pass /chat/poke %agent [our %chat] %poke %chat-action !>(action)]
+  [%pass /chat/poke %agent [our %channels] %poke %channel-action-1 !>(action)]
 ++  find-slash
   |=  =memo:chat
-  ^-  [cord cord]
+  ^-  (unit [tape tape])
   ::  find the first raw text segment
   =/  first=cord
-    ?-  content.memo
-        [%notice *]  !!
-        [%story *]
-      =/  inlines  q.p.content.memo
-      |-
-      ?~  inlines  !!
-      ?@  i.inlines  i.inlines
-      $(inlines t.inlines)
-    ==
-  =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
-  [(crip call) (crip text)]
+    =/  verses  content.memo
+    |-  ?~  verses  !!
+      ?:  ?=(%inline -.i.verses)
+        =/  inlines  p.i.verses
+        |-
+          ?~  inlines  !!
+          ?@  i.inlines  i.inlines
+          $(inlines t.inlines)
+
+      $(verses t.verses)
+    
+  :: =/  [call=tape text=tape]  (scan (trip first) slash-command-rule)
+  :: [(crip call) (crip call)]
+
+  (rust (trip first) slash-command-rule)
+
 ::  "/mycommand lorem ipsum" to ["mycommand" "lorem ipsum"]
 ++  slash-command-rule
   ;~  (glue (star ace))
@@ -49,20 +54,23 @@
 ++  message
   |=  [=id:chat =flag:chat =content:chat]
   ^-  action:chat
-  :-  flag
-  :-  q.id
-  :-  %writs
-  :-  id
+  =/  =memo:chat  [content id]
+  :-  %channel
+  :-  [%chat flag]
+  :-  %post
   :-  %add
-  :-  replying=~
-  :-  author=p.id
-  :-  sent=q.id
-  content
+  :-  memo
+  :-  /chat
+  :-  ~  ~
+
+
 ++  reply-to-content
   |=  =reply
   ^-  content:chat
   ?^  reply  reply
-  [%story [~ ~[reply]]]
+  ?~  reply  !!  ::  nande?
+  :~  [%inline :~(reply)]
+  ==
 ++  replace-vase
   |=  [q=quilt call=cord =vase]
   ^-  quilt
@@ -120,23 +128,23 @@
     ::
         %fact
         ?+    p.cage.sign  `this
-            %chat-action-0
-          =/  =action:chat  !<(action:chat q.cage.sign)
-          =/  =flag:chat  p.action
-          =/  =diff:chat  q.q.action
-          ?+  -.diff  `this
-              %writs
-            =/  =delta:writs:chat  q.p.diff
-            ?+  -.delta  `this
-                %add
-              =/  =memo:chat  p.delta
-              ::  ?:  =(our.bowl author.memo)  `this
-              =/  [call=cord text=cord]  (find-slash memo)
-              =/  =command  (~(got by quilt) call)
-              :_  this
-              ~[(run-thread-card call command flag text memo)]
-            ==
-          ==
+            %channel-response-4 
+          =/  =fact:chat  !<(fact:chat q.cage.sign)
+          =/  =flag:chat  +.nest.fact
+          ?.  ?=(%post -.r-channel.fact)  `this
+          ?.  ?=(%set -.r-post.r-channel.fact)  `this
+          =/  up  post.r-post.r-channel.fact
+          ?.  ?=(%.y -.up)  `this
+          =/  =post:chat  +.up
+          =/  =essay:chat  +>.post
+          =/  =memo:chat  -.essay
+          =/  ucall  (find-slash memo)
+          ?~  ucall  `this
+          =/  call  %-  crip  -.u.ucall
+          =/  text  %-  crip  +.u.ucall
+          =/  =command  (~(got by quilt) call)
+          :_  this
+          ~[(run-thread-card call command flag text memo)]
         ==
     ==
   ==
