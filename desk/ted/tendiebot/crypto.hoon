@@ -1,4 +1,4 @@
-/-  spider, *gato
+/-  spider, *gata
 /+  tendiebot-quote, *strandio
 =,  strand=strand:spider
 =,  dejs:format

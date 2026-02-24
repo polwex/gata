@@ -1,4 +1,4 @@
-/-  chat, *gato
+/-  chat, *gata
 /+  default-agent, dbug
 |%
 +$  versioned-state

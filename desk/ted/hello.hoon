@@ -1,4 +1,4 @@
-/-  spider, *gato
+/-  spider, *gata
 /+  *strandio
 ::
 ::  this is common setup for all threads

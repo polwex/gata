@@ -1,4 +1,4 @@
-/-  spider, *gato
+/-  spider, *gata
 /+  *strandio
 =,  strand=strand:spider
 =,  dejs:format
