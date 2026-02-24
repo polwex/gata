@@ -25,7 +25,7 @@
             ==
 !>  [reply vase.bird]
 
-++  url  'http://localhost:9100/voice-s3'
+++  url  'http://localhost:9100/voice'
 ++  request  
   |=  [voice=@t text=@t]
   =/  m  (strand ,inline:chat)
@@ -33,6 +33,7 @@
   =/  ijon=json  %-  pairs:enjs:format
     :~  :-  %voice  s+voice
         :-  %text   s+text
+        :-  %blob   b+.n
     ==
   =/  =request:http
     :*  method=%'POST'
